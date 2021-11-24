@@ -145,27 +145,42 @@ export type BackstageIdentity = {
    * An opaque ID that uniquely identifies the user within Backstage.
    *
    * This is typically the same as the user entity `metadata.name`.
+   *
+   * @deprecated Use the `identity` field instead
    */
   id: string;
-
-  /**
-   * This is deprecated, use `token` instead.
-   * @deprecated
-   */
-  idToken?: string;
-
-  /**
-   * The token used to authenticate the user within Backstage.
-   */
-  token?: string;
 
   /**
    * The entity that the user is represented by within Backstage.
    *
    * This entity may or may not exist within the Catalog, and it can be used
    * to read and store additional metadata about the user.
+   *
+   * @deprecated Use the `identity` field instead.
    */
   entity?: Entity;
+
+  /**
+   * The token used to authenticate the user within Backstage.
+   */
+  token: string;
+
+  /**
+   * A plaintext description of the identity that is encapsulated within the token.
+   */
+  identity?: {
+    type: 'user';
+
+    /**
+     * The entityRef of the user in the catalog.
+     * For example User:default/sandra
+     */
+    userEntityRef: string;
+    /**
+     * The user and group entities that the user claims ownership through
+     */
+    ownershipEntityRefs: string[];
+  };
 };
 
 /**
